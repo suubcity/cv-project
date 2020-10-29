@@ -2,7 +2,7 @@ import React from "react";
 
 function Form(props) {
   return (
-    <form class="form" onSubmit={props.displayingResults}>
+    <form class="form" onSubmit={props.toggleDisplayResults}>
       <h2>Personal Info</h2>
       <label>
         Name

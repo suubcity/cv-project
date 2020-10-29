@@ -25,7 +25,7 @@ function Result(props) {
       <br />
       <div>Worked Until: {props.state.workedUntil}</div>
       <br />
-      <button onClick={props.displayingResults}>Edit</button>
+      <button onClick={props.toggleDisplayResults}>Edit</button>
     </div>
   );
 }
