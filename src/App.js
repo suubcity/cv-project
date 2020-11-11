@@ -1,45 +1,45 @@
-import React, { useState } from "react";
-import "./App.css";
-import Form from "./components/Form.js";
-import Result from "./components/Result.js";
+import React, { useState, useEffect } from "react";
+import camelCase from "camelcase";
+import Form from "./components/Form";
+import Result from "./components/Result";
 
 function App() {
-  const [displayResults, setDisplayResults] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
 
-  function toggleDisplayResults(e) {
-    e.preventDefault();
-    setDisplayResults(() => !displayResults);
-  }
+  const [formData, setForm] = useState({});
 
-  const [cvData, setCvData] = useState({});
   function handleInputChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-    setCvData((cvData) => {
-      return {
-        ...cvData,
-        [name]: value,
-      };
+    setForm({
+      ...formData,
+      [e.currentTarget.name]: e.currentTarget.value,
     });
+    console.log(formData);
   }
 
-  if (displayResults) {
-    return (
-      <div>
-        <Result toggleDisplayResults={toggleDisplayResults} state={cvData} />
-      </div>
-    );
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsEditing(false);
   }
-  return (
-    <div>
-      <Form
-        handleInputChange={handleInputChange}
-        toggleDisplayResults={toggleDisplayResults}
-        state={cvData}
-      />
-    </div>
-  );
+
+  function handleEditClick(e) {
+    // e.preventDefault();
+    setIsEditing(true);
+  }
+
+  function displayPage() {
+    if (isEditing) {
+      return (
+        <Form
+          handleSubmit={handleSubmit}
+          handleInputChange={handleInputChange}
+          formData={formData}
+        />
+      );
+    }
+    return <Result handleEditClick={handleEditClick} formData={formData}/>;
+  }
+
+  return <div>{displayPage()}</div>;
 }
 
 export default App;
